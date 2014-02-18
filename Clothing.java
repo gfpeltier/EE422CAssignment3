@@ -2,7 +2,7 @@ package Assignment3;
 
 public class Clothing extends Item 
 {
-
+	public static final double SALESTAX = 1.10;				// Adds extra 10% to price of item
 	// variables, constructors as necessary
 	
 	double calculatePrice () 
