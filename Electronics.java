@@ -4,12 +4,31 @@ public class Electronics extends Item {
 	
 	public static final double SALESTAX = 1.10;				// Adds extra 10% to price of item
 	
-	protected enum fragile {F,NF};
+	protected enum frag {F,NF};
 	
-	Electronics(String itName, double itPrice, int itQuantity, int itWeight, String isFragile){
+	protected frag fragility;
+	
+	
+	
+	Electronics(String itName, double itPrice, int itQuantity, double itWeight, String isFragile){
 		super(itName, itPrice, itQuantity, itWeight);
+		if(isFragile.indexOf("F") != -1){
+			fragility = frag.F;
+		}else {
+			fragility = frag.NF;
+		}
 	}
 	
-	//Implement calculate price/print methods as necessary
+	double calculatePrice () 
+	{
+		double final_price = 0;
+		// Insert price calculation here
+		return final_price;
+	}
+	
+	void printItemAttributes () 
+	{
+		//Print all applicable attributes of this sub-class
+	}
 
 }

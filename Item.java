@@ -5,18 +5,18 @@ public class Item {
 	protected String name;
 	protected double price;
 	protected int quantity;
-	protected int weight;			// pdf says weight is to be given in whole pounds
+	protected double weight;			// pdf says weight is to be given in whole pounds
 
 
 	Item(){				// Default constructor
 		name = new String();
 		price = 0.0;
 		quantity = 0;
-		weight = 0;
+		weight = 0.0;
 	}
 	
 	
-	Item(String itName, double itPrice, int itQuantity, int itWeight){
+	Item(String itName, double itPrice, int itQuantity, double itWeight){
 		name = itName;
 		price = itPrice;
 		quantity = itQuantity;
@@ -26,7 +26,7 @@ public class Item {
 	double calculatePrice () 
 	{
 		double final_price = 0.0;
-		// Insert price calculation here
+		final_price = (20*weight)*quantity;
 		return final_price;
 	}
 	

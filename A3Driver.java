@@ -54,7 +54,50 @@ public class A3Driver
 	  }
 
 	  public static String processInput(String input){
+		  int off = 0;
+		  String operation = new String(getWord(input, off));
+		  off += operation.length() + 1;
+		  String category = new String(getWord(input, off));
+		  off += category.length() + 1;
+		  String name = new String(getWord(input, off));
+		  off += name.length() + 1;
+		  String price = new String(getWord(input, off));
+		  off += price.length() + 1;
+		  String quantity = new String(getWord(input, off));
+		  off += quantity.length() + 1;
+		  String weight = new String(getWord(input, off));
+		  off += weight.length() + 1;
+		  String op1 = new String();
+		  String op2 = new String();
+		  if(off < input.length()){
+			  while(off < input.length() && input.charAt(off) != ' '){
+				  op1 += input.charAt(off);
+				  off++;
+			  }
+			  off++;
+		  } 
+		  if(off < input.length()){
+			  while(off < input.length()){
+				  op2 += input.charAt(off);
+				  off++;
+			  }
+		  }
+		  String output = new String(completeAction(operation, category, name, price, quantity, weight, op1, op2));
+		  return output;
+	  }
+	  
+	  public static String completeAction(String operate, String category, String itemName, String itemPrice, String itemQuantity, String itemWeight, String op1, String op2){
 		  String output = new String();
 		  return output;
+	  }
+	  
+	  public static String getWord(String input, int offset){
+		  String word = new String();
+		  if(offset >= input.length()){return word;}
+		  while(offset < input.length() && input.charAt(offset) != ' '){
+			  word += input.charAt(offset);
+			  offset += 1;
+		  }
+		  return word;
 	  }
 }
