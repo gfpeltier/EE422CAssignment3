@@ -9,12 +9,5 @@ public class Clothing extends Item
 		super(itName, itPrice, itQuantity, itWeight);
 	}
 	
-	double calculatePrice () 
-	{
-		double final_price = 0;
-		// Insert price calculation here
-		return final_price;
-	}
-	
 
 }

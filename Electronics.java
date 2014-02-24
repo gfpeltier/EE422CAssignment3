@@ -1,8 +1,11 @@
 package Assignment3;
 
+import java.text.DecimalFormat;
+
 public class Electronics extends Item {
 	
 	public static final double SALESTAX = 1.10;				// Adds extra 10% to price of item
+	public static final double PREMIUM = 1.20;
 	
 	protected enum frag {F,NF};
 	
@@ -24,15 +27,24 @@ public class Electronics extends Item {
 	
 	double calculatePrice () 
 	{
-		double final_price = 0;
-		// Insert price calculation here
+		double final_price = 0.0;
+		final_price = (20*weight)*quantity;
+		if(fragility == frag.F){
+			final_price *= PREMIUM;
+		}
+		if(!(shipState.contentEquals("TX") || shipState.contentEquals("NM") || shipState.contentEquals("VA") || shipState.contentEquals("AZ") || shipState.contentEquals("AK"))){
+			final_price += ((price*quantity)*SALESTAX);
+		} else{
+			final_price += price*quantity;
+		}
 		return final_price;
 	}
 	
 	void printItemAttributes () 
 	{
+		DecimalFormat df = new DecimalFormat("0.00"); 
 		System.out.println("Item: " + name);
-		System.out.println("Price: " + price);
+		System.out.println("Price: $" + df.format(price));
 		System.out.println("Quantity: " + quantity);
 		System.out.println("Weight: " + weight);
 		if(fragility == frag.F){
@@ -40,7 +52,8 @@ public class Electronics extends Item {
 		}else if(fragility == frag.NF){
 			System.out.println("Fragility: Not Fragile");
 		}
-		System.out.println("Ship to: " + shipState + "\n");
+		System.out.println("Ship to: " + shipState);
+		System.out.println("TOTAL ITEM COST: $" + df.format(calculatePrice()) + "\n");
 	}
 
 }

@@ -1,7 +1,10 @@
 package Assignment3;
 
+import java.text.DecimalFormat;
+
 public class Item {
 	
+	public static final double SALESTAX = 1.10;	
 	protected String name;
 	protected double price;
 	protected int quantity;
@@ -27,16 +30,19 @@ public class Item {
 	{
 		double final_price = 0.0;
 		final_price = (20*weight)*quantity;
+		final_price += ((price*quantity)*SALESTAX);
 		return final_price;
 	}
 	
 
 	void printItemAttributes () 
 	{
+		DecimalFormat df = new DecimalFormat("0.00"); 
 		System.out.println("Item: " + name);
-		System.out.println("Price: " + price);
+		System.out.println("Price: $" + df.format(price));
 		System.out.println("Quantity: " + quantity);
-		System.out.println("Weight: " + weight + "\n");
+		System.out.println("Weight: " + weight);
+		System.out.println("TOTAL ITEM COST: $" + df.format(calculatePrice()) + "\n");
 	}
 	
 	boolean hasData(){

@@ -192,7 +192,9 @@ public class A3Driver
 	  }
 
 	  public static String operationPrint(){
+		  DecimalFormat df = new DecimalFormat("0.00"); 
 		  Iterator<Item> i = shoppingCart.iterator();
+		  double cartPrice = 0.0;
 		  Collections.sort(shoppingCart, new Comparator<Item>(){
 				  public int compare(Item item1, Item item2){
 			  return item1.name.compareToIgnoreCase(item2.name);
@@ -202,7 +204,9 @@ public class A3Driver
 		  while(i.hasNext()){
 			  Item temp = i.next();
 			  temp.printItemAttributes();
+			  cartPrice += temp.calculatePrice();
 		  }
+		  System.out.println("\nTOTAL CART PRICE: $" + df.format(cartPrice));
 		  return "";
 	  }
 	  
