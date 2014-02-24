@@ -10,6 +10,14 @@ public class Grocery extends Item {
 	
 	protected perish perishable;
 	
+	/**
+	 * 
+	 * @param itName
+	 * @param itPrice
+	 * @param itQuantity
+	 * @param itWeight
+	 * @param perishability
+	 */
 	Grocery(String itName, double itPrice, int itQuantity, double itWeight, String perishability){
 		super(itName, itPrice, itQuantity, itWeight);
 		if(perishability.contentEquals("P")){
@@ -19,6 +27,9 @@ public class Grocery extends Item {
 		}
 	}
 	
+	/**
+	 * 
+	 */
 	double calculatePrice () 
 	{
 		double final_price = 0.0;
@@ -30,6 +41,9 @@ public class Grocery extends Item {
 		return final_price;
 	}
 	
+	/**
+	 * 
+	 */
 	void printItemAttributes () 
 	{
 		DecimalFormat df = new DecimalFormat("0.00"); 

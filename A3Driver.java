@@ -9,7 +9,11 @@ public class A3Driver
 
 	public static ArrayList<Item> shoppingCart = new ArrayList<Item>(); 
 	
-	  public static void main(String[] args) 
+	/**
+	 *   
+	 * @param args
+	 */
+	public static void main(String[] args) 
 	  {
 		  if (args.length != 1) 
 			{
@@ -36,18 +40,6 @@ public class A3Driver
 	            e.printStackTrace();
 	      }
 		
-		
-		// General code example for how to iterate an array list. You will have to modify this heavily, to suit your needs.
-		
-		//while (i.hasNext()) 
-		//{
-			//Item temp = i.next();
-			//temp.calculatePrice(); 
-			//temp.printItemAttributes();
-			//This (above) works because of polymorphism: a determination is made at runtime, 
-			//based on the inherited class type, as to which method is to be invoked. Eg: If it is an instance
-			// of Grocery, it will invoke the calculatePrice () method defined in Grocery.
-		//}		
 	  }
 
 	  /**
@@ -56,8 +48,6 @@ public class A3Driver
 	   * @param input
 	   * @return
 	   */
-	  
-	  
 	  public static String processInput(String input){
 		  int off = 0;
 		  String operation = new String(getWord(input, off));
@@ -136,6 +126,7 @@ public class A3Driver
 			  return output;
 		  }else{return "operationError";}
 	  }
+	  
 	  /**
 	   * Does not insert alphabetically. Use the iterator to do that separately when necessary.
 	   * @param newItem
@@ -143,11 +134,17 @@ public class A3Driver
 	   */
 	  public static String operationInsert(Item newItem){
 		  shoppingCart.add(newItem);
-		  return newItem.quantity + " " + newItem.name + "(s) has been added to your cart.";
+		  if(newItem.quantity != 1){
+		  return newItem.quantity + " " + newItem.name + "s have been added to your cart.";
+		  }else{return newItem.quantity + " " + newItem.name + " has been added to your cart.";}
 	  }
 	  
 	  
-	  //TODO: there is currently an issue with the way the iterator is implemented in the search operation
+	  /**
+	   * 
+	   * @param itemName
+	   * @return
+	   */
 	  public static String operationSearch(String itemName){
 		  Iterator<Item> i = shoppingCart.iterator();
 		  Item found = new Item();
@@ -157,10 +154,17 @@ public class A3Driver
 				  found = temp;
 			  }
 		  }if(found.hasData()){
-			  return "There are currently " + found.quantity + " items matching the name " + itemName + " in your cart.";
+			  if(found.quantity != 1){
+			  return "There are currently " + found.quantity + " items matching the name " +"\"" +  itemName + "\"" + " in your cart.";
+			  } else{return "There is currently 1 item matching the name " + "\"" + itemName + "\"" + " in your cart.";}
 			  }else{return "Item" + " \""+ itemName + "\" " + "not found in cart.";}
 	  }
 
+	  /**
+	   * 
+	   * @param itemName
+	   * @return
+	   */
 	  public static String operationDelete(String itemName){
 		  Iterator<Item> i = shoppingCart.iterator();
 		  Item found = new Item();
@@ -175,6 +179,12 @@ public class A3Driver
 		  }else{return "There are no items matching " + itemName + " in your cart.";}
 	  }
 
+	  /**
+	   * 
+	   * @param itemName
+	   * @param amount
+	   * @return
+	   */
 	  public static String operationUpdate(String itemName, String amount){
 		  Iterator<Item> i = shoppingCart.iterator();
 		  int amt = Integer.parseInt(amount);
@@ -186,11 +196,17 @@ public class A3Driver
 				  found = temp;
 			  }
 		  }if(found.hasData()){
-			  return "There are now " + found.quantity + " " + found.name + "(s) in your cart.";
+			  if(found.quantity != 1){
+			  return "There are now " + found.quantity + " " + found.name + "s in your cart.";
+			  } else{return "There is now 1 " + found.name + " in your cart.";}
 		  }else{return "Item" + " \"" +  itemName + "\" " + "not found in cart";}
 		  
 	  }
 
+	  /**
+	   * 
+	   * @return
+	   */
 	  public static String operationPrint(){
 		  DecimalFormat df = new DecimalFormat("0.00"); 
 		  Iterator<Item> i = shoppingCart.iterator();
@@ -210,7 +226,12 @@ public class A3Driver
 		  return "";
 	  }
 	  
-	  
+	  /**
+	   * 
+	   * @param input
+	   * @param offset
+	   * @return
+	   */
 	  public static String getWord(String input, int offset){
 		  String word = new String();
 		  if(offset >= input.length()){return word;}

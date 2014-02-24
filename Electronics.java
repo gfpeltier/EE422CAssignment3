@@ -14,7 +14,15 @@ public class Electronics extends Item {
 	protected String shipState;
 	
 	
-	
+	/**
+	 * 
+	 * @param itName
+	 * @param itPrice
+	 * @param itQuantity
+	 * @param itWeight
+	 * @param isFragile
+	 * @param state
+	 */
 	Electronics(String itName, double itPrice, int itQuantity, double itWeight, String isFragile, String state){
 		super(itName, itPrice, itQuantity, itWeight);
 		if(isFragile.indexOf("F") != -1){
@@ -25,6 +33,9 @@ public class Electronics extends Item {
 		shipState = new String(state);
 	}
 	
+	/**
+	 * 
+	 */
 	double calculatePrice () 
 	{
 		double final_price = 0.0;
@@ -40,6 +51,9 @@ public class Electronics extends Item {
 		return final_price;
 	}
 	
+	/**
+	 * 
+	 */
 	void printItemAttributes () 
 	{
 		DecimalFormat df = new DecimalFormat("0.00"); 

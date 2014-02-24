@@ -8,9 +8,12 @@ public class Item {
 	protected String name;
 	protected double price;
 	protected int quantity;
-	protected double weight;			// pdf says weight is to be given in whole pounds
+	protected double weight;			// pdf says weight is to be given in whole pounds... but double just in case for now
 
 
+	/**
+	 * 
+	 */
 	Item(){				// Default constructor
 		name = new String();
 		price = 0.0;
@@ -18,7 +21,13 @@ public class Item {
 		weight = 0.0;
 	}
 	
-	
+	/**
+	 * 
+	 * @param itName
+	 * @param itPrice
+	 * @param itQuantity
+	 * @param itWeight
+	 */
 	Item(String itName, double itPrice, int itQuantity, double itWeight){
 		name = new String(itName);
 		price = itPrice;
@@ -26,6 +35,10 @@ public class Item {
 		weight = itWeight;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	double calculatePrice () 
 	{
 		double final_price = 0.0;
@@ -34,7 +47,9 @@ public class Item {
 		return final_price;
 	}
 	
-
+	/**
+	 * 
+	 */
 	void printItemAttributes () 
 	{
 		DecimalFormat df = new DecimalFormat("0.00"); 
@@ -45,6 +60,10 @@ public class Item {
 		System.out.println("TOTAL ITEM COST: $" + df.format(calculatePrice()) + "\n");
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	boolean hasData(){
 		if(! name.isEmpty()){
 			return true;
