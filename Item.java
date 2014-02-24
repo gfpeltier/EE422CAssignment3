@@ -17,7 +17,7 @@ public class Item {
 	
 	
 	Item(String itName, double itPrice, int itQuantity, double itWeight){
-		name = itName;
+		name = new String(itName);
 		price = itPrice;
 		quantity = itQuantity;
 		weight = itWeight;

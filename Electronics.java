@@ -8,15 +8,18 @@ public class Electronics extends Item {
 	
 	protected frag fragility;
 	
+	protected String shipState;
 	
 	
-	Electronics(String itName, double itPrice, int itQuantity, double itWeight, String isFragile){
+	
+	Electronics(String itName, double itPrice, int itQuantity, double itWeight, String isFragile, String state){
 		super(itName, itPrice, itQuantity, itWeight);
 		if(isFragile.indexOf("F") != -1){
 			fragility = frag.F;
 		}else {
 			fragility = frag.NF;
 		}
+		shipState = new String(state);
 	}
 	
 	double calculatePrice () 

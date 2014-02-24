@@ -7,6 +7,9 @@ import java.text.DecimalFormat;			// To be used to format prices properly
 public class A3Driver 
 	{
 
+	public static ArrayList<Item> shoppingCart = new ArrayList<Item>(); 
+	public static Iterator<Item> i = shoppingCart.iterator();
+	
 	  public static void main(String[] args) 
 	  {
 		  if (args.length != 1) 
@@ -35,13 +38,12 @@ public class A3Driver
 	      }
 		  
 		
-		//Parse input, take appropriate actions.
 		
 		//Stub for arraylist.
-		ArrayList<Item> shoppingCart = new ArrayList<Item>(); 
+		
 		
 		// General code example for how to iterate an array list. You will have to modify this heavily, to suit your needs.
-		Iterator<Item> i = shoppingCart.iterator();
+		
 		while (i.hasNext()) 
 		{
 			Item temp = i.next();
@@ -53,6 +55,12 @@ public class A3Driver
 		}		
 	  }
 
+	  /**
+	   * 
+	   *
+	   * @param input
+	   * @return
+	   */
 	  public static String processInput(String input){
 		  int off = 0;
 		  String operation = new String(getWord(input, off));
@@ -86,9 +94,66 @@ public class A3Driver
 		  return output;
 	  }
 	  
+	  /**
+	   * 
+	   * @param operate
+	   * @param category
+	   * @param itemName
+	   * @param itemPrice
+	   * @param itemQuantity
+	   * @param itemWeight
+	   * @param op1
+	   * @param op2
+	   * @return
+	   */
 	  public static String completeAction(String operate, String category, String itemName, String itemPrice, String itemQuantity, String itemWeight, String op1, String op2){
-		  String output = new String();
-		  return output;
+		  if(operate.contentEquals("insert")){
+			  Item newItem = new Item();
+			  double itPrice = Double.parseDouble(itemPrice);
+			  int itAmount = Integer.parseInt(itemQuantity);
+			  double itWeight = Double.parseDouble(itemWeight);
+			  if(category.contentEquals("electronics")){
+				  newItem = new Electronics(itemName, itPrice, itAmount, itWeight, op1, op2);
+			  }else if(category.contentEquals("clothing")){
+				  newItem = new Clothing(itemName, itPrice, itAmount, itWeight);
+			  }else if(category.contentEquals("groceries")){
+				  newItem = new Grocery(itemName, itPrice, itAmount, itWeight, op1);
+			  }else {return "categoryInsertError";}
+			  String output = new String(operationInsert(newItem));  
+			  return output;
+		  }else if(operate.contentEquals("search")){
+			  String output = new String(operationSearch(itemName));  
+			  return output;
+		  }else if(operate.contentEquals("delete")){
+			  String output = new String(operationDelete(itemName));  
+			  return output;
+		  }else if(operate.contentEquals("update")){
+			  String output = new String(operationUpdate(itemName, itemQuantity));  
+			  return output;
+		  }else if(operate.contentEquals("print")){
+			  String output = new String(operationPrint());  
+			  return output;
+		  }else{return "operationError";}
+	  }
+	  
+	  public static String operationInsert(Item newItem){
+		  
+	  }
+	  
+	  public static String operationSearch(String itemName){
+		  
+	  }
+
+	  public static String operationDelete(String itemName){
+		  
+	  }
+
+	  public static String operationUpdate(String itemName, String amount){
+		  
+	  }
+
+	  public static String operationPrint(){
+		  
 	  }
 	  
 	  public static String getWord(String input, int offset){
