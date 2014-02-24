@@ -78,6 +78,15 @@ public class A3Driver
 			  }
 		  }
 		  String output = new String(completeAction(operation, category, name, price, quantity, weight, op1, op2));
+		  if(output.contentEquals("operationError")){
+			  return "Invalid Operation";
+		  }
+		  if(output.contentEquals("categoryInsertError")){
+			  return "Invalid Item Category for Insert Function";
+		  }
+		  if(output.contentEquals("invalidAmount")){
+			  return "Quantities for insert and update cannot be less than 0";
+		  }
 		  return output;
 	  }
 	  
@@ -97,8 +106,9 @@ public class A3Driver
 		  if(operate.contentEquals("insert")){
 			  Item newItem = new Item();
 			  double itPrice = Double.parseDouble(itemPrice);
-			  int itAmount = Integer.parseInt(itemQuantity);
 			  double itWeight = Double.parseDouble(itemWeight);
+			  int itAmount = Integer.parseInt(itemQuantity);
+			  if(itAmount < 0){return "invalidAmount";}
 			  if(category.contentEquals("electronics")){
 				  newItem = new Electronics(itemName, itPrice, itAmount, itWeight, op1, op2);
 			  }else if(category.contentEquals("clothing")){
@@ -119,7 +129,9 @@ public class A3Driver
 		  }else if(operate.contentEquals("update")){
 			  itemQuantity = itemName;
 			  itemName = category;
-			  String output = new String(operationUpdate(itemName, itemQuantity));  
+			  int itAmount = Integer.parseInt(itemQuantity);
+			  if(itAmount < 0){return "invalidAmount";}
+			  String output = new String(operationUpdate(itemName, itemQuantity));
 			  return output;
 		  }else if(operate.contentEquals("print")){
 			  String output = new String(operationPrint());  
@@ -133,6 +145,7 @@ public class A3Driver
 	   * @return
 	   */
 	  public static String operationInsert(Item newItem){
+		  if(newItem.quantity == 0){return "Cannot add a quantity of 0 " + newItem.name + " to your cart.";}
 		  shoppingCart.add(newItem);
 		  if(newItem.quantity != 1){
 		  return newItem.quantity + " " + newItem.name + "s have been added to your cart.";
@@ -175,8 +188,10 @@ public class A3Driver
 				  i.remove();
 			  }
 		  }if(found.hasData()){
-			  return found.quantity + " " + found.name + "(s) have been removed from your cart.";
-		  }else{return "There are no items matching " + itemName + " in your cart.";}
+			  if(found.quantity != 1){
+			  return found.quantity + " " + found.name + "s have been removed from your cart.";
+			  }else{return found.quantity + " " + found.name + " has been removed from your cart.";}
+		  }else{return "There are no items matching " + "\"" +itemName + "\"" + " in your cart.";}
 	  }
 
 	  /**
@@ -189,18 +204,28 @@ public class A3Driver
 		  Iterator<Item> i = shoppingCart.iterator();
 		  int amt = Integer.parseInt(amount);
 		  Item found = new Item();
-		  while(i.hasNext()){
-			  Item temp = i.next();
-			  if(temp.name.contentEquals(itemName)){
+		  if(amt > 0){
+			  while(i.hasNext()){
+			  	Item temp = i.next();
+			  	if(temp.name.contentEquals(itemName)){
 				  temp.quantity = amt;
 				  found = temp;
+			  	}
+		  	}if(found.hasData()){
+			  	if(found.quantity != 1){
+				  return "There are now " + found.quantity + " " + found.name + "s in your cart.";
+			  	} else{return "There is now 1 " + found.name + " in your cart.";}
+		  	}else{return "Item" + " \"" +  itemName + "\" " + "not found in cart";}
+		  }else{
+			  while(i.hasNext()){
+				  	Item temp = i.next();
+				  	if(temp.name.contentEquals(itemName)){
+					  found = temp;
+					  i.remove();
+				  	}
 			  }
-		  }if(found.hasData()){
-			  if(found.quantity != 1){
-			  return "There are now " + found.quantity + " " + found.name + "s in your cart.";
-			  } else{return "There is now 1 " + found.name + " in your cart.";}
-		  }else{return "Item" + " \"" +  itemName + "\" " + "not found in cart";}
-		  
+			return found.name + " has been removed from your cart since it was updated to a quantity of 0.";  
+		  }
 	  }
 
 	  /**
