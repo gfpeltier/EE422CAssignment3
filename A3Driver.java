@@ -158,7 +158,7 @@ public class A3Driver
 			  }
 		  }if(found.hasData()){
 			  return "There are currently " + found.quantity + " items matching the name " + itemName + " in your cart.";
-			  }else{return "Item not found in cart.";}
+			  }else{return "Item" + " \""+ itemName + "\" " + "not found in cart.";}
 	  }
 
 	  public static String operationDelete(String itemName){
@@ -187,17 +187,25 @@ public class A3Driver
 			  }
 		  }if(found.hasData()){
 			  return "There are now " + found.quantity + " " + found.name + "(s) in your cart.";
-		  }else{return "Item not found in cart";}
+		  }else{return "Item" + " \"" +  itemName + "\" " + "not found in cart";}
 		  
 	  }
 
 	  public static String operationPrint(){
 		  Iterator<Item> i = shoppingCart.iterator();
+		  Collections.sort(shoppingCart, new Comparator<Item>(){
+				  public int compare(Item item1, Item item2){
+			  return item1.name.compareToIgnoreCase(item2.name);
+		  }
+				  });
+		  System.out.println("\nPrinting cart contents:\n");
 		  while(i.hasNext()){
-			  
+			  Item temp = i.next();
+			  temp.printItemAttributes();
 		  }
 		  return "";
 	  }
+	  
 	  
 	  public static String getWord(String input, int offset){
 		  String word = new String();

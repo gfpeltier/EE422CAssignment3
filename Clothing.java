@@ -16,10 +16,5 @@ public class Clothing extends Item
 		return final_price;
 	}
 	
-	void printItemAttributes () 
-	{
-		//Print all applicable attributes of this sub-class
-	}
-	
 
 }

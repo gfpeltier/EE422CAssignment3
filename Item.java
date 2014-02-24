@@ -33,7 +33,10 @@ public class Item {
 
 	void printItemAttributes () 
 	{
-		//Print all applicable attributes of this class
+		System.out.println("Item: " + name);
+		System.out.println("Price: " + price);
+		System.out.println("Quantity: " + quantity);
+		System.out.println("Weight: " + weight + "\n");
 	}
 	
 	boolean hasData(){

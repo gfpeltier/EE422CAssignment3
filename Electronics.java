@@ -31,7 +31,16 @@ public class Electronics extends Item {
 	
 	void printItemAttributes () 
 	{
-		//Print all applicable attributes of this sub-class
+		System.out.println("Item: " + name);
+		System.out.println("Price: " + price);
+		System.out.println("Quantity: " + quantity);
+		System.out.println("Weight: " + weight);
+		if(fragility == frag.F){
+			System.out.println("Fragility: Fragile");
+		}else if(fragility == frag.NF){
+			System.out.println("Fragility: Not Fragile");
+		}
+		System.out.println("Ship to: " + shipState + "\n");
 	}
 
 }

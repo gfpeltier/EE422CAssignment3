@@ -17,7 +17,15 @@ public class Grocery extends Item {
 	
 	void printItemAttributes () 
 	{
-		//Print all applicable attributes of this sub-class
+		System.out.println("Item: " + name);
+		System.out.println("Price: " + price);
+		System.out.println("Quantity: " + quantity);
+		System.out.println("Weight: " + weight);
+		if(perishable == perish.P){
+			System.out.println("Perishability: Perishable\n");
+		}else if(perishable == perish.NP){
+			System.out.println("Perishability: Not Perishable\n");
+		}
 	}
 	
 }
