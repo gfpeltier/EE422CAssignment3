@@ -1,3 +1,17 @@
 insert clothing shirt 20.50 1 1
 insert electronics PS3 300 1 5.2 F NM
 insert groceries cabbage 2.00 5 1 NP
+search shirt
+update shirt 5
+search shirt
+delete shirt
+search shirt
+insert clothing shirt 30.00 1 1
+update shirt 0
+update shirt 5
+insert groceries apple 1 4 1 P
+insert electronics ChromeCast 35.0 1 0.5 NF NY
+update cabbage -4
+insert clothing pants 50 0 2
+insert electronics tv 400 -1 6 F TX
+print
