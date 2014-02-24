@@ -8,7 +8,6 @@ public class A3Driver
 	{
 
 	public static ArrayList<Item> shoppingCart = new ArrayList<Item>(); 
-	public static Iterator<Item> i = shoppingCart.iterator();
 	
 	  public static void main(String[] args) 
 	  {
@@ -36,23 +35,19 @@ public class A3Driver
 	            // Not able to read line
 	            e.printStackTrace();
 	      }
-		  
-		
-		
-		//Stub for arraylist.
 		
 		
 		// General code example for how to iterate an array list. You will have to modify this heavily, to suit your needs.
 		
-		while (i.hasNext()) 
-		{
-			Item temp = i.next();
-			temp.calculatePrice(); 
-			temp.printItemAttributes();
+		//while (i.hasNext()) 
+		//{
+			//Item temp = i.next();
+			//temp.calculatePrice(); 
+			//temp.printItemAttributes();
 			//This (above) works because of polymorphism: a determination is made at runtime, 
 			//based on the inherited class type, as to which method is to be invoked. Eg: If it is an instance
 			// of Grocery, it will invoke the calculatePrice () method defined in Grocery.
-		}		
+		//}		
 	  }
 
 	  /**
@@ -61,6 +56,8 @@ public class A3Driver
 	   * @param input
 	   * @return
 	   */
+	  
+	  
 	  public static String processInput(String input){
 		  int off = 0;
 		  String operation = new String(getWord(input, off));
@@ -122,12 +119,16 @@ public class A3Driver
 			  String output = new String(operationInsert(newItem));  
 			  return output;
 		  }else if(operate.contentEquals("search")){
+			  itemName = category;
 			  String output = new String(operationSearch(itemName));  
 			  return output;
 		  }else if(operate.contentEquals("delete")){
+			  itemName = category;
 			  String output = new String(operationDelete(itemName));  
 			  return output;
 		  }else if(operate.contentEquals("update")){
+			  itemQuantity = itemName;
+			  itemName = category;
 			  String output = new String(operationUpdate(itemName, itemQuantity));  
 			  return output;
 		  }else if(operate.contentEquals("print")){
@@ -135,25 +136,67 @@ public class A3Driver
 			  return output;
 		  }else{return "operationError";}
 	  }
-	  
+	  /**
+	   * Does not insert alphabetically. Use the iterator to do that separately when necessary.
+	   * @param newItem
+	   * @return
+	   */
 	  public static String operationInsert(Item newItem){
-		  
+		  shoppingCart.add(newItem);
+		  return newItem.quantity + " " + newItem.name + "(s) has been added to your cart.";
 	  }
 	  
+	  
+	  //TODO: there is currently an issue with the way the iterator is implemented in the search operation
 	  public static String operationSearch(String itemName){
-		  
+		  Iterator<Item> i = shoppingCart.iterator();
+		  Item found = new Item();
+		  while(i.hasNext()){
+			  Item temp = i.next();
+			  if(temp.name.contentEquals(itemName)){
+				  found = temp;
+			  }
+		  }if(found.hasData()){
+			  return "There are currently " + found.quantity + " items matching the name " + itemName + " in your cart.";
+			  }else{return "Item not found in cart.";}
 	  }
 
 	  public static String operationDelete(String itemName){
-		  
+		  Iterator<Item> i = shoppingCart.iterator();
+		  Item found = new Item();
+		  while(i.hasNext()){
+			  Item temp = i.next();
+			  if(temp.name.contentEquals(itemName)){
+				  found = temp;
+				  i.remove();
+			  }
+		  }if(found.hasData()){
+			  return found.quantity + " " + found.name + "(s) have been removed from your cart.";
+		  }else{return "There are no items matching " + itemName + " in your cart.";}
 	  }
 
 	  public static String operationUpdate(String itemName, String amount){
+		  Iterator<Item> i = shoppingCart.iterator();
+		  int amt = Integer.parseInt(amount);
+		  Item found = new Item();
+		  while(i.hasNext()){
+			  Item temp = i.next();
+			  if(temp.name.contentEquals(itemName)){
+				  temp.quantity = amt;
+				  found = temp;
+			  }
+		  }if(found.hasData()){
+			  return "There are now " + found.quantity + " " + found.name + "(s) in your cart.";
+		  }else{return "Item not found in cart";}
 		  
 	  }
 
 	  public static String operationPrint(){
-		  
+		  Iterator<Item> i = shoppingCart.iterator();
+		  while(i.hasNext()){
+			  
+		  }
+		  return "";
 	  }
 	  
 	  public static String getWord(String input, int offset){

@@ -35,5 +35,11 @@ public class Item {
 	{
 		//Print all applicable attributes of this class
 	}
+	
+	boolean hasData(){
+		if(! name.isEmpty()){
+			return true;
+		} else{return false;}
+	}
 
 }
