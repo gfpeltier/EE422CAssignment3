@@ -1,3 +1,9 @@
+/**
+ * @author Grant Peltier & John Nelson
+ * EID: gfp237 & jkn387
+ * EE422C Spring 2014 Assignment3
+ */
+
 package Assignment3;
 
 import java.util.*;
