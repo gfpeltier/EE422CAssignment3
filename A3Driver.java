@@ -10,7 +10,7 @@ public class A3Driver
 	public static ArrayList<Item> shoppingCart = new ArrayList<Item>(); 
 	
 	/**
-	 *   
+	 * Main function for Assignment3. Takes in input file from the command line.  
 	 * @param args
 	 */
 	public static void main(String[] args) 
@@ -43,10 +43,10 @@ public class A3Driver
 	  }
 
 	  /**
-	   * 
-	   *
+	   * This method parses the input taken in by the file reader and parses it into
+	   * its seperate parts. Then passes those parts to completeAction()
 	   * @param input
-	   * @return
+	   * @return Output string to main
 	   */
 	  public static String processInput(String input){
 		  int off = 0;
@@ -78,20 +78,18 @@ public class A3Driver
 			  }
 		  }
 		  String output = new String(completeAction(operation, category, name, price, quantity, weight, op1, op2));
-		  if(output.contentEquals("operationError")){
-			  return "Invalid Operation";
-		  }
 		  if(output.contentEquals("categoryInsertError")){
-			  return "Invalid Item Category for Insert Function";
+			  return "Invalid Item Category for Insert Function.";
 		  }
 		  if(output.contentEquals("invalidAmount")){
-			  return "Quantities for insert and update cannot be less than 0";
+			  return "Quantities for insert and update cannot be less than 0.";
 		  }
 		  return output;
 	  }
 	  
 	  /**
-	   * 
+	   * This method is called by processInput(). Depending on the operation part of the input, it 
+	   * passes along the necessary parameters to the different operation methods.
 	   * @param operate
 	   * @param category
 	   * @param itemName
@@ -100,7 +98,7 @@ public class A3Driver
 	   * @param itemWeight
 	   * @param op1
 	   * @param op2
-	   * @return
+	   * @return Output string to pass up the line as output. Or error string to be dealt with in processInput()
 	   */
 	  public static String completeAction(String operate, String category, String itemName, String itemPrice, String itemQuantity, String itemWeight, String op1, String op2){
 		  if(operate.contentEquals("insert")){
@@ -136,13 +134,14 @@ public class A3Driver
 		  }else if(operate.contentEquals("print")){
 			  String output = new String(operationPrint());  
 			  return output;
-		  }else{return "operationError";}
+		  }else{return "\"" + operate + "\"" + " is not a valid operation.";}
 	  }
 	  
 	  /**
-	   * Does not insert alphabetically. Use the iterator to do that separately when necessary.
+	   * This method inserts items into the shoppingCart ArrayList. Does not insert alphabetically. 
+	   * Use the iterator to do that separately when necessary.
 	   * @param newItem
-	   * @return
+	   * @return Output string for either a successful or error add.
 	   */
 	  public static String operationInsert(Item newItem){
 		  if(newItem.quantity == 0){return "Cannot add a quantity of 0 " + newItem.name + " to your cart.";}
@@ -154,51 +153,55 @@ public class A3Driver
 	  
 	  
 	  /**
-	   * 
+	   * Iterates through the ArrayList to find Items matching the itemName.
 	   * @param itemName
-	   * @return
+	   * @return Output string for either a successfully found Item, or not found one. Include number found if successful.
 	   */
 	  public static String operationSearch(String itemName){
 		  Iterator<Item> i = shoppingCart.iterator();
 		  Item found = new Item();
+		  int numFound = 0;
 		  while(i.hasNext()){
 			  Item temp = i.next();
-			  if(temp.name.contentEquals(itemName)){
+			  if(temp.name.equalsIgnoreCase(itemName)){
 				  found = temp;
+				  numFound += found.quantity;
 			  }
 		  }if(found.hasData()){
-			  if(found.quantity != 1){
-			  return "There are currently " + found.quantity + " items matching the name " +"\"" +  itemName + "\"" + " in your cart.";
+			  if(numFound != 1){
+			  return "There are currently " + numFound + " items matching the name " +"\"" +  itemName + "\"" + " in your cart.";
 			  } else{return "There is currently 1 item matching the name " + "\"" + itemName + "\"" + " in your cart.";}
 			  }else{return "Item" + " \""+ itemName + "\" " + "not found in cart.";}
 	  }
 
 	  /**
-	   * 
+	   * Iterates through shoppingCart ArrayList and removes any items matching the input string
 	   * @param itemName
-	   * @return
+	   * @return Output string. If matching item found, tells how many were removed.
 	   */
 	  public static String operationDelete(String itemName){
 		  Iterator<Item> i = shoppingCart.iterator();
 		  Item found = new Item();
+		  int quant = 0;
 		  while(i.hasNext()){
 			  Item temp = i.next();
-			  if(temp.name.contentEquals(itemName)){
+			  if(temp.name.equalsIgnoreCase(itemName)){
 				  found = temp;
+				  quant += found.quantity;
 				  i.remove();
 			  }
 		  }if(found.hasData()){
-			  if(found.quantity != 1){
-			  return found.quantity + " " + found.name + "s have been removed from your cart.";
-			  }else{return found.quantity + " " + found.name + " has been removed from your cart.";}
+			  if(quant != 1){
+			  return quant + " " + found.name + "s have been removed from your cart.";
+			  }else{return quant + " " + found.name + " has been removed from your cart.";}
 		  }else{return "There are no items matching " + "\"" +itemName + "\"" + " in your cart.";}
 	  }
 
 	  /**
-	   * 
+	   * Iterates through shoppingCart ArrayList and updates any Items matching the item name to the new quantity.
 	   * @param itemName
 	   * @param amount
-	   * @return
+	   * @return Output string. If Item is found and updated. Tells the new quantity of the item.
 	   */
 	  public static String operationUpdate(String itemName, String amount){
 		  Iterator<Item> i = shoppingCart.iterator();
@@ -207,30 +210,33 @@ public class A3Driver
 		  if(amt > 0){
 			  while(i.hasNext()){
 			  	Item temp = i.next();
-			  	if(temp.name.contentEquals(itemName)){
+			  	if(temp.name.equalsIgnoreCase(itemName)){
 				  temp.quantity = amt;
 				  found = temp;
+				  if(found.quantity != 1){
+					  return "There are now " + found.quantity + " " + found.name + "s in your cart.";
+				  	} else{return "There is now 1 " + found.name + " in your cart.";}
 			  	}
-		  	}if(found.hasData()){
-			  	if(found.quantity != 1){
-				  return "There are now " + found.quantity + " " + found.name + "s in your cart.";
-			  	} else{return "There is now 1 " + found.name + " in your cart.";}
-		  	}else{return "Item" + " \"" +  itemName + "\" " + "not found in cart";}
+		  	}
+			  return "Item" + " \"" +  itemName + "\" " + "not found in cart";
 		  }else{
 			  while(i.hasNext()){
 				  	Item temp = i.next();
-				  	if(temp.name.contentEquals(itemName)){
+				  	if(temp.name.equalsIgnoreCase(itemName)){
 					  found = temp;
 					  i.remove();
+					  return found.name + " has been removed from your cart since it was updated to a quantity of 0.";
 				  	}
 			  }
-			return found.name + " has been removed from your cart since it was updated to a quantity of 0.";  
+			return "Item" + " \"" +  itemName + "\" " + "not found in cart";  
 		  }
 	  }
 
 	  /**
-	   * 
-	   * @return
+	   * Sorts the shoppingCart ArrayList and then iterates through to print all important data. 
+	   * Also determines and prints final prices for each individual item as well as price for entire
+	   * cart.
+	   * @return null string
 	   */
 	  public static String operationPrint(){
 		  DecimalFormat df = new DecimalFormat("0.00"); 
@@ -242,6 +248,7 @@ public class A3Driver
 		  }
 				  });
 		  System.out.println("\nPrinting cart contents:\n");
+		  if(shoppingCart.isEmpty()){return "Your shopping cart is empty.\n\n";}
 		  while(i.hasNext()){
 			  Item temp = i.next();
 			  temp.printItemAttributes();
@@ -252,10 +259,10 @@ public class A3Driver
 	  }
 	  
 	  /**
-	   * 
+	   * Parses single parts from input string based on current index within the string.
 	   * @param input
 	   * @param offset
-	   * @return
+	   * @return String parsed from input line. Comprised of all characters between spaces.
 	   */
 	  public static String getWord(String input, int offset){
 		  String word = new String();

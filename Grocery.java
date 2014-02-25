@@ -11,7 +11,7 @@ public class Grocery extends Item {
 	protected perish perishable;
 	
 	/**
-	 * 
+	 * Constructor for grocery items
 	 * @param itName
 	 * @param itPrice
 	 * @param itQuantity
@@ -28,7 +28,7 @@ public class Grocery extends Item {
 	}
 	
 	/**
-	 * 
+	 * Calculates price of item with shipping and taxes
 	 */
 	double calculatePrice () 
 	{
@@ -42,7 +42,7 @@ public class Grocery extends Item {
 	}
 	
 	/**
-	 * 
+	 * Prints all important data for particular item
 	 */
 	void printItemAttributes () 
 	{

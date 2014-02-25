@@ -12,7 +12,7 @@ public class Item {
 
 
 	/**
-	 * 
+	 * Default Item constructor
 	 */
 	Item(){				// Default constructor
 		name = new String();
@@ -22,7 +22,7 @@ public class Item {
 	}
 	
 	/**
-	 * 
+	 * Item constructor with all parameters
 	 * @param itName
 	 * @param itPrice
 	 * @param itQuantity
@@ -36,8 +36,8 @@ public class Item {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Determine price for the item including shipping and taxes.
+	 * @return Complete price for item as a double precision floating point
 	 */
 	double calculatePrice () 
 	{
@@ -48,7 +48,7 @@ public class Item {
 	}
 	
 	/**
-	 * 
+	 * Print all important data for the item.
 	 */
 	void printItemAttributes () 
 	{
@@ -61,8 +61,8 @@ public class Item {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Determine whether or not item is empty
+	 * @return boolean. True if not empty. False if it is empty.
 	 */
 	boolean hasData(){
 		if(! name.isEmpty()){

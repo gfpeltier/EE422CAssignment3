@@ -15,7 +15,7 @@ public class Electronics extends Item {
 	
 	
 	/**
-	 * 
+	 * Constructor for electronics item
 	 * @param itName
 	 * @param itPrice
 	 * @param itQuantity
@@ -34,7 +34,7 @@ public class Electronics extends Item {
 	}
 	
 	/**
-	 * 
+	 * Calculates price with shipping and taxes
 	 */
 	double calculatePrice () 
 	{
@@ -52,7 +52,7 @@ public class Electronics extends Item {
 	}
 	
 	/**
-	 * 
+	 * Prints all important data for the particular item.
 	 */
 	void printItemAttributes () 
 	{
