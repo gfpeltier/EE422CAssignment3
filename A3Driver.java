@@ -78,9 +78,6 @@ public class A3Driver
 			  }
 		  }
 		  String output = new String(completeAction(operation, category, name, price, quantity, weight, op1, op2));
-		  if(output.contentEquals("categoryInsertError")){
-			  return "Invalid Item Category for Insert Function.";
-		  }
 		  if(output.contentEquals("invalidAmount")){
 			  return "Quantities for insert and update cannot be less than 0.";
 		  }
@@ -106,14 +103,14 @@ public class A3Driver
 			  double itPrice = Double.parseDouble(itemPrice);
 			  double itWeight = Double.parseDouble(itemWeight);
 			  int itAmount = Integer.parseInt(itemQuantity);
-			  if(itAmount < 0){return "invalidAmount";}
+			  if(itAmount < 0){return "invalidAmount";}			// Return string to be dealt with as error if item amount < 0
 			  if(category.contentEquals("electronics")){
 				  newItem = new Electronics(itemName, itPrice, itAmount, itWeight, op1, op2);
 			  }else if(category.contentEquals("clothing")){
 				  newItem = new Clothing(itemName, itPrice, itAmount, itWeight);
 			  }else if(category.contentEquals("groceries")){
 				  newItem = new Grocery(itemName, itPrice, itAmount, itWeight, op1);
-			  }else {return "categoryInsertError";}
+			  }else {return "\"" + category + "\"" + " is an invalid item category. Must be \"electronics\", \"clothing\", or \"groceries\".";}			// Item category is not electronics, clothing, or groceries. return this string to be dealt with as error.
 			  String output = new String(operationInsert(newItem));  
 			  return output;
 		  }else if(operate.contentEquals("search")){
@@ -128,13 +125,13 @@ public class A3Driver
 			  itemQuantity = itemName;
 			  itemName = category;
 			  int itAmount = Integer.parseInt(itemQuantity);
-			  if(itAmount < 0){return "invalidAmount";}
+			  if(itAmount < 0){return "invalidAmount";}			// Return string to be dealt with as error if item amount < 0
 			  String output = new String(operationUpdate(itemName, itemQuantity));
 			  return output;
 		  }else if(operate.contentEquals("print")){
 			  String output = new String(operationPrint());  
 			  return output;
-		  }else{return "\"" + operate + "\"" + " is not a valid operation.";}
+		  }else{return "\"" + operate + "\"" + " is not a valid operation.";}		// If operation is not recognized by valid operation names. Return this error string to be printed
 	  }
 	  
 	  /**
@@ -146,6 +143,11 @@ public class A3Driver
 	  public static String operationInsert(Item newItem){
 		  if(newItem.quantity == 0){return "Cannot add a quantity of 0 " + newItem.name + " to your cart.";}
 		  shoppingCart.add(newItem);
+		  Collections.sort(shoppingCart, new Comparator<Item>(){		// Sorting method to organize shopping cart lexicographically by Item name
+			  public int compare(Item item1, Item item2){
+		  return item1.name.compareToIgnoreCase(item2.name);
+			  }
+		  });
 		  if(newItem.quantity != 1){
 		  return newItem.quantity + " " + newItem.name + "s have been added to your cart.";
 		  }else{return newItem.quantity + " " + newItem.name + " has been added to your cart.";}
@@ -219,7 +221,7 @@ public class A3Driver
 			  	}
 		  	}
 			  return "Item" + " \"" +  itemName + "\" " + "not found in cart";
-		  }else{
+		  }else{								// Remove item if it is updated to a quantity of 0
 			  while(i.hasNext()){
 				  	Item temp = i.next();
 				  	if(temp.name.equalsIgnoreCase(itemName)){
@@ -239,14 +241,9 @@ public class A3Driver
 	   * @return null string
 	   */
 	  public static String operationPrint(){
-		  DecimalFormat df = new DecimalFormat("0.00"); 
+		  DecimalFormat df = new DecimalFormat("0.00"); 		// Decimal format to truncate all dollar amounts to 2 places after the decimal
 		  Iterator<Item> i = shoppingCart.iterator();
 		  double cartPrice = 0.0;
-		  Collections.sort(shoppingCart, new Comparator<Item>(){
-				  public int compare(Item item1, Item item2){
-			  return item1.name.compareToIgnoreCase(item2.name);
-		  }
-				  });
 		  System.out.println("\nPrinting cart contents:\n");
 		  if(shoppingCart.isEmpty()){return "Your shopping cart is empty.\n\n";}
 		  while(i.hasNext()){

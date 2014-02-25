@@ -34,10 +34,10 @@ public class Grocery extends Item {
 	{
 		double final_price = 0.0;
 		final_price = (20*weight)*quantity;
-		if(perishable == perish.P){
+		if(perishable == perish.P){		// if grocery item is perishable, must add premium shipping upcharge
 			final_price *= PREMIUM;
 		}
-		final_price += ((price*quantity)*SALESTAX);
+		final_price += (quantity*price);
 		return final_price;
 	}
 	
@@ -46,7 +46,7 @@ public class Grocery extends Item {
 	 */
 	void printItemAttributes () 
 	{
-		DecimalFormat df = new DecimalFormat("0.00"); 
+		DecimalFormat df = new DecimalFormat("0.00"); 			// Decimal format to truncate all dollar amounts to 2 places after the decimal
 		System.out.println("Item: " + name);
 		System.out.println("Price: $" + df.format(price));
 		System.out.println("Quantity: " + quantity);

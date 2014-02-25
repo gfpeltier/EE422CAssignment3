@@ -52,7 +52,7 @@ public class Item {
 	 */
 	void printItemAttributes () 
 	{
-		DecimalFormat df = new DecimalFormat("0.00"); 
+		DecimalFormat df = new DecimalFormat("0.00"); 		// Decimal format to truncate all dollar amounts to 2 places after the decimal
 		System.out.println("Item: " + name);
 		System.out.println("Price: $" + df.format(price));
 		System.out.println("Quantity: " + quantity);

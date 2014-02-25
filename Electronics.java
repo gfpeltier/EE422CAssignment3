@@ -41,10 +41,10 @@ public class Electronics extends Item {
 		double final_price = 0.0;
 		final_price = (20*weight)*quantity;
 		if(fragility == frag.F){
-			final_price *= PREMIUM;
+			final_price *= PREMIUM;			// 1.2 scalar multiplier for premium shipping
 		}
 		if(!(shipState.contentEquals("TX") || shipState.contentEquals("NM") || shipState.contentEquals("VA") || shipState.contentEquals("AZ") || shipState.contentEquals("AK"))){
-			final_price += ((price*quantity)*SALESTAX);
+			final_price += ((price*quantity)*SALESTAX);			// If shipping to someplace other than TX, NM, VA, AZ, or AK then must add taxes
 		} else{
 			final_price += price*quantity;
 		}
@@ -56,7 +56,7 @@ public class Electronics extends Item {
 	 */
 	void printItemAttributes () 
 	{
-		DecimalFormat df = new DecimalFormat("0.00"); 
+		DecimalFormat df = new DecimalFormat("0.00"); 		// Decimal format to truncate all dollar amounts to 2 places after the decimal
 		System.out.println("Item: " + name);
 		System.out.println("Price: $" + df.format(price));
 		System.out.println("Quantity: " + quantity);
