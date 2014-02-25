@@ -105,10 +105,13 @@ public class A3Driver
 			  int itAmount = Integer.parseInt(itemQuantity);
 			  if(itAmount < 0){return "invalidAmount";}			// Return string to be dealt with as error if item amount < 0
 			  if(category.contentEquals("electronics")){
+				  if(op2.length() != 2){return "\"" + op2 + "\" is an invalid state to ship to.";}
+				  if(!op1.contentEquals("F") || !op1.contentEquals("NF")){return "\"" + op1 + "\"" + " is an invalid fragility for electronics items. Must be \"F\" or \"NF\".";}	// Electronics Item fragility invalid error
 				  newItem = new Electronics(itemName, itPrice, itAmount, itWeight, op1, op2);
 			  }else if(category.contentEquals("clothing")){
 				  newItem = new Clothing(itemName, itPrice, itAmount, itWeight);
 			  }else if(category.contentEquals("groceries")){
+				  if(!op1.contentEquals("P") || !op1.contentEquals("NP")){return "\"" + op1 + "\"" + " is an invalid perishablity for grocery items. Must be \"P\" or \"NP\".";}		// Grocery Item perishability invalid error.
 				  newItem = new Grocery(itemName, itPrice, itAmount, itWeight, op1);
 			  }else {return "\"" + category + "\"" + " is an invalid item category. Must be \"electronics\", \"clothing\", or \"groceries\".";}			// Item category is not electronics, clothing, or groceries. return this string to be dealt with as error.
 			  String output = new String(operationInsert(newItem));  
